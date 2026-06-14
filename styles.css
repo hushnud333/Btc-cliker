@@ -245,6 +245,82 @@ body {
 }
 
 /* ============================================
+   BOOSTS / REWARDED ADS
+============================================ */
+.boosts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.boost-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  border-radius: var(--border-radius);
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+  text-align: left;
+}
+
+.boost-btn:active {
+  transform: scale(0.98);
+}
+
+.boost-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.boost-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.boost-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.boost-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.boost-sub {
+  font-size: 12px;
+  color: var(--gold);
+}
+
+.boost-btn:disabled .boost-sub {
+  color: var(--text-secondary);
+}
+
+.multiplier-banner {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: #000;
+  font-weight: 700;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+  animation: pulseBanner 1s ease-in-out infinite;
+}
+
+@keyframes pulseBanner {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* ============================================
    ENERGY BAR
 ============================================ */
 .energy-bar-container {
@@ -577,4 +653,4 @@ body {
 ============================================ */
 .screens::-webkit-scrollbar {
   width: 0;
-}
+   }
