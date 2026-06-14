@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CoinHamster</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="profile">
+        <div class="avatar">₿</div>
+        <div class="profile-info">
+          <span class="username" id="username">Player</span>
+          <span class="level">Level <span id="level">1</span></span>
+        </div>
+      </div>
+      <div class="balance-pill">
+        <span class="coin-icon">🪙</span>
+        <span id="coin-balance">0</span>
+      </div>
+    </header>
+
+    <!-- ===== SCREENS ===== -->
+    <main class="screens">
+
+      <!-- TAP SCREEN -->
+      <section id="tap-screen" class="screen active">
+        <div class="profit-info">
+          <span>Profit per hour</span>
+          <strong id="profit-per-hour">+0 🪙</strong>
+        </div>
+
+        <div class="tap-area">
+          <div class="hamster-wrapper">
+            <img
+              id="hamster"
+              class="hamster-img"
+              src="https://cdn-icons-png.flaticon.com/512/5968/5968260.png"
+              alt="Tap to earn Bitcoin"
+              draggable="false"
+              onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Ccircle cx=%2232%22 cy=%2232%22 r=%2230%22 fill=%22%23f7931a%22/%3E%3Ctext x=%2232%22 y=%2244%22 font-size=%2232%22 font-family=%22Arial%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22%3E%E2%82%BF%3C/text%3E%3C/svg%3E'"
+            />
+          </div>
+        </div>
+
+        <div class="energy-bar-container">
+          <div class="energy-icon">⚡</div>
+          <div class="energy-bar-track">
+            <div class="energy-bar-fill" id="energy-fill"></div>
+          </div>
+          <div class="energy-text">
+            <span id="energy-current">1000</span> / <span id="energy-max">1000</span>
+          </div>
+        </div>
+
+        <div class="boosts-section">
+          <button class="boost-btn" id="boost-energy-btn">
+            <span class="boost-icon">⚡</span>
+            <span class="boost-text">
+              <span class="boost-title">Full Energy</span>
+              <span class="boost-sub" id="boost-energy-count">Watch ad · 5/5 left today</span>
+            </span>
+          </button>
+          <button class="boost-btn" id="boost-multiplier-btn">
+            <span class="boost-icon">✨</span>
+            <span class="boost-text">
+              <span class="boost-title">2x Coins (60s)</span>
+              <span class="boost-sub" id="boost-multiplier-count">Watch ad · 5/5 left today</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="multiplier-banner" id="multiplier-banner" style="display:none;">
+          ✨ 2x Coins active — <span id="multiplier-timer">60</span>s
+        </div>
+      </section>
+
+      <!-- MINE / UPGRADES SCREEN -->
+      <section id="mine-screen" class="screen">
+        <h2 class="screen-title">Upgrades</h2>
+        <p class="screen-subtitle">Boost your tap power and passive income</p>
+
+        <div class="upgrade-tabs">
+          <button class="upgrade-tab active" data-category="tap">Tap Power</button>
+          <button class="upgrade-tab" data-category="mine">Mining</button>
+        </div>
+
+        <div class="upgrade-list" id="upgrade-list">
+          <!-- Cards injected by JS -->
+        </div>
+      </section>
+
+      <!-- FRIENDS / REFERRALS SCREEN -->
+      <section id="friends-screen" class="screen">
+        <h2 class="screen-title">Friends</h2>
+        <p class="screen-subtitle">Invite friends and earn bonus coins together!</p>
+
+        <div class="referral-card">
+          <div class="referral-reward">
+            <span class="coin-icon">🪙</span>
+            <strong>+5,000</strong> for you and your friend
+          </div>
+          <button class="invite-btn" id="invite-btn">Invite a Friend</button>
+        </div>
+
+        <div class="friends-list">
+          <h3>Your Friends (<span id="friends-count">0</span>)</h3>
+          <ul id="friends-ul">
+            <li class="empty-state">No friends invited yet.</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===== BOTTOM NAVIGATION ===== -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-screen="tap-screen">
+        <span class="nav-icon">👆</span>
+        <span class="nav-label">Tap</span>
+      </button>
+      <button class="nav-btn" data-screen="mine-screen">
+        <span class="nav-icon">⛏️</span>
+        <span class="nav-label">Mine</span>
+      </button>
+      <button class="nav-btn" data-screen="friends-screen">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label">Friends</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Telegram Web App SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Monetag SDK for rewarded ads -->
+  <script src='//libtl.com/sdk.js' data-zone='11147626' data-sdk='show_11147626'></script>
+
+  <!-- Firebase SDK (modular v9+ via CDN, exposed as ES module) -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
