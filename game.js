@@ -758,7 +758,7 @@ function setupNavigation() {
 function setupInvite() {
   els.inviteBtn.addEventListener('click', () => {
     const tg = window.Telegram?.WebApp;
-    const botUsername = 'YourBotUsername'; // placeholder
+    const botUsername = 'Btcclickercoin_bot'; // your bot's username
     const userId = tg?.initDataUnsafe?.user?.id || 'demo';
     const inviteLink = `https://t.me/${botUsername}?start=ref_${userId}`;
 
