@@ -1,26 +1,30 @@
 // ==========================================================
-// FIREBASE CONFIGURATION
+// FIREBASE CONFIGURATION (client-side, read-only)
 // ==========================================================
-// 1. Go to https://console.firebase.google.com
-// 2. Create a project, register a Web App, and copy the config
-//    object Firebase gives you into firebaseConfig below.
-// 3. Enable Firestore (Build > Firestore Database > Create database).
-// 4. Set Firestore security rules (see project notes / chat for
-//    the recommended starter rules).
+// All writes to player data now go through our backend API routes
+// (/api/tap, /api/buy-tap-upgrade, etc.), which use the Firebase
+// Admin SDK and bypass these client rules entirely. The client only
+// reads its own player doc, used for cross-device restore.
 //
-// ⚠️ Replace the placeholder values below with YOUR project's keys.
+// Recommended Firestore rules (Firestore -> Rules):
+//
+//   rules_version = '2';
+//   service cloud.firestore {
+//     match /databases/{database}/documents {
+//       match /players/{userId} {
+//         allow read: if true;
+//         allow write: if false; // only the Admin SDK (backend) can write
+//       }
+//     }
+//   }
+//
 // ==========================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getFirestore,
   doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  increment,
-  arrayUnion,
-  serverTimestamp
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -39,7 +43,7 @@ const db = getFirestore(app);
 const PLAYERS_COLLECTION = "players";
 
 /**
- * Get a player's saved document from Firestore.
+ * Get a player's saved document from Firestore (read-only).
  * Returns null if it doesn't exist yet.
  */
 export async function fetchPlayer(userId) {
@@ -50,52 +54,6 @@ export async function fetchPlayer(userId) {
   } catch (err) {
     console.error("Firestore fetchPlayer failed:", err);
     return null;
-  }
-}
-
-/**
- * Overwrite a player's full state in Firestore (merge: true so we
- * never wipe fields we didn't include).
- */
-export async function savePlayer(userId, state) {
-  try {
-    const ref = doc(db, PLAYERS_COLLECTION, String(userId));
-    await setDoc(
-      ref,
-      {
-        ...state,
-        updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
-    return true;
-  } catch (err) {
-    console.error("Firestore savePlayer failed:", err);
-    return false;
-  }
-}
-
-/**
- * Credit a referral bonus to the inviter's Firestore document and
- * record the new friend's name. Uses atomic increment/arrayUnion so
- * concurrent referrals don't overwrite each other.
- */
-export async function creditReferral(inviterId, bonusAmount, friendName) {
-  try {
-    const ref = doc(db, PLAYERS_COLLECTION, String(inviterId));
-    await setDoc(
-      ref,
-      {
-        coins: increment(bonusAmount),
-        friends: arrayUnion(friendName),
-        updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
-    return true;
-  } catch (err) {
-    console.error("Firestore creditReferral failed:", err);
-    return false;
   }
 }
 
