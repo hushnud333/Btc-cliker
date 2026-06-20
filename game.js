@@ -1,7 +1,7 @@
 import { fetchPlayer } from './firebase-config.js';
 
 /* ==========================================================
-   CONFIG & CONSTANTS
+   CONFIG & CONSTANTS and something 
 ========================================================== */
 const STORAGE_KEY = 'coinHamsterSave_v1';
 
